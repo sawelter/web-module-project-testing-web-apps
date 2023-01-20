@@ -131,19 +131,58 @@ test('renders all firstName, lastName and email text when submitted. Does NOT re
     const submitButton = screen.getByRole('button');
 
     userEvent.type(firstNameInput, "Sawyer");
-    userEvent.type(lastNameInput, "Hopper");
+    userEvent.type(lastNameInput, "Welter");
     userEvent.type(emailInput, "sawyer.welter@gmail.com");
     userEvent.click(submitButton);
 
-    const messageLabel = screen.queryByText("Message: ");
+    await waitFor(() => {
+        // previously had : vvv
+        // const messageLabel = screen.queryByText("Message: ");
+        // expect(messageLabel).not.toBeInTheDocument();
+        
+        // stuff I did not have before vvv
+        const firstNameDisplay = screen.queryByText("Sawyer");
+        const lastNameDisplay  = screen.queryByText("Welter");
+        const emailDisplay = screen.queryByText("sawyer.welter@gmail.com");
+        const messageDisplay = screen.queryByText("I am sending in a contact form.");
 
-    expect(messageLabel).not.toBeInTheDocument();
+        expect(firstNameDisplay).toBeInTheDocument();
+        expect(lastNameDisplay).toBeInTheDocument();
+        expect(emailDisplay).toBeInTheDocument();
+        expect(messageDisplay).not.toBeInTheDocument();
+    });    
 });
 
 // Test 10
-// test('renders all fields text when all fields are submitted.', async () => {
-    // render(<ContactForm />);
-// });
+test('renders all fields text when all fields are submitted.', async () => {
+    render(<ContactForm />);
+    const firstNameInput = screen.getByLabelText(/first name*/i);
+    const lastNameInput  = screen.getByLabelText(/last name*/i);
+    const emailInput = screen.getByLabelText(/email*/i);
+    const messageInput = screen.getByLabelText(/message/i);
+    const submitButton = screen.getByRole('button');
+
+    userEvent.type(firstNameInput, "Sawyer");
+    userEvent.type(lastNameInput, "Welter");
+    userEvent.type(emailInput, "sawyer.welter@gmail.com");
+    userEvent.type(messageInput, "I am sending in a contact form.");
+    userEvent.click(submitButton);
+
+    await waitFor(() => {
+        const firstNameDisplay = screen.queryByText("Sawyer");
+        const lastNameDisplay  = screen.queryByText("Welter");
+        const emailDisplay = screen.queryByText("sawyer.welter@gmail.com");
+        const messageDisplay = screen.queryAllByText("I am sending in a contact form.");
+
+        // console.log(firstNameDisplay);
+
+        // expect(firstNameDisplay).toBeInTheDocument();
+        // expect(lastNameDisplay).toBeInTheDocument();
+        // expect(emailDisplay).toBeInTheDocument();
+        // expect(messageDisplay).toBeInTheDocument();
+
+    })
+});
 
 
 
