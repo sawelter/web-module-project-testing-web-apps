@@ -144,7 +144,7 @@ test('renders all firstName, lastName and email text when submitted. Does NOT re
         const firstNameDisplay = screen.queryByText("Sawyer");
         const lastNameDisplay  = screen.queryByText("Welter");
         const emailDisplay = screen.queryByText("sawyer.welter@gmail.com");
-        const messageDisplay = screen.queryByText("I am sending in a contact form.");
+        const messageDisplay = screen.queryByTestId("messageDisplay");
 
         expect(firstNameDisplay).toBeInTheDocument();
         expect(lastNameDisplay).toBeInTheDocument();
@@ -172,16 +172,15 @@ test('renders all fields text when all fields are submitted.', async () => {
         const firstNameDisplay = screen.queryByText("Sawyer");
         const lastNameDisplay  = screen.queryByText("Welter");
         const emailDisplay = screen.queryByText("sawyer.welter@gmail.com");
-        const messageDisplay = screen.queryAllByText("I am sending in a contact form.");
+        const messageDisplay = screen.queryByTestId("messageDisplay");
 
         // console.log(firstNameDisplay);
 
-        // expect(firstNameDisplay).toBeInTheDocument();
-        // expect(lastNameDisplay).toBeInTheDocument();
-        // expect(emailDisplay).toBeInTheDocument();
-        // expect(messageDisplay).toBeInTheDocument();
-
-    })
+        expect(firstNameDisplay).toBeInTheDocument();
+        expect(lastNameDisplay).toBeInTheDocument();
+        expect(emailDisplay).toBeInTheDocument();
+        expect(messageDisplay).toBeInTheDocument();
+    });
 });
 
 
