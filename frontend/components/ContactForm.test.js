@@ -109,26 +109,58 @@ test('renders "email must be a valid email address" if an invalid email is enter
     
 });
 
+
+// Test 8
 test('renders "lastName is a required field" if an last name is not entered and the submit button is clicked', async () => {
     render(<ContactForm />);
 
-    const firstNameInput = screen.getByLabelText(/first name*/i);
-    const emailInput = screen.getByLabelText(/email*/i);
     const submitButton = screen.getByRole('button');
-
-    userEvent.type(firstNameInput, "Sawyer");
-    userEvent.type(emailInput, "sawyer.welter@gmail.com");
     userEvent.click(submitButton);
 
-    const errorMessage = screen.queryByText(/lastName is a required field/);
+    const errorMessage = await screen.queryByText(/lastName is a required field/);
 
     expect(errorMessage).toBeInTheDocument();
 });
 
-// test('renders all firstName, lastName and email text when submitted. Does NOT render message if message is not submitted.', async () => {
+// Test 9
+test('renders all firstName, lastName and email text when submitted. Does NOT render message if message is not submitted.', async () => {
+    render(<ContactForm />);
+    const firstNameInput = screen.getByLabelText(/first name*/i);
+    const lastNameInput  = screen.getByLabelText(/last name*/i);
+    const emailInput = screen.getByLabelText(/email*/i);
+    const submitButton = screen.getByRole('button');
+
+    userEvent.type(firstNameInput, "Sawyer");
+    userEvent.type(lastNameInput, "Hopper");
+    userEvent.type(emailInput, "sawyer.welter@gmail.com");
+    userEvent.click(submitButton);
+
+    const messageLabel = screen.queryByText("Message: ");
+
+    expect(messageLabel).not.toBeInTheDocument();
+});
+
+// Test 10
+// test('renders all fields text when all fields are submitted.', async () => {
     // render(<ContactForm />);
 // });
 
-// test('renders all fields text when all fields are submitted.', async () => {
-    // render(<ContactForm />);
+
+
+//////// My original take on Test 8 ////////
+
+// test('renders "lastName is a required field" if an last name is not entered and the submit button is clicked', async () => {
+//     render(<ContactForm />);
+
+//     const firstNameInput = screen.getByLabelText(/first name*/i);
+//     const emailInput = screen.getByLabelText(/email*/i);
+//     const submitButton = screen.getByRole('button');
+
+//     userEvent.type(firstNameInput, "Sawyer");
+//     userEvent.type(emailInput, "sawyer.welter@gmail.com");
+//     userEvent.click(submitButton);
+
+//     const errorMessage = screen.queryByText(/lastName is a required field/);
+
+//     expect(errorMessage).toBeInTheDocument();
 // });
